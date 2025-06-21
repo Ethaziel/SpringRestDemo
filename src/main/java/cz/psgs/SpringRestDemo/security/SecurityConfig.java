@@ -2,10 +2,15 @@ package cz.psgs.SpringRestDemo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -21,6 +26,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
 import cz.psgs.SpringRestDemo.config.RsaKeyProperties;
+import lombok.var;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
 
@@ -41,6 +47,12 @@ public class SecurityConfig {
                 .password("{noop}tatka")
                 .authorities("read")
                 .build());
+    }
+
+    @Bean
+    public AuthenticationManager authManager(UserDetailsService userDetailsService){
+        var authProvider = new DaoAuthenticationProvider(userDetailsService);
+        return new ProviderManager(authProvider);
     }
 
     @Bean
@@ -68,6 +80,12 @@ public class SecurityConfig {
             .oauth2ResourceServer(oAuth -> oAuth.jwt(Customizer.withDefaults())
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+            // TODO only for testing
+            http.csrf(AbstractHttpConfigurer::disable);
+            http.headers(headers -> 
+                headers.frameOptions(frameOptions -> 
+                    frameOptions.disable()));
 
             return http.build();
             
