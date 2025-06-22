@@ -11,6 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -44,17 +46,23 @@ public class SecurityConfig {
     }
 
     @Bean
+    public static PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    /* @Bean
     public InMemoryUserDetailsManager users(){
         return new InMemoryUserDetailsManager(
             User.withUsername("tatka")
                 .password("{noop}tatka")
                 .authorities("read")
                 .build());
-    }
+    } */
 
     @Bean
     public AuthenticationManager authManager(UserDetailsService userDetailsService){
         var authProvider = new DaoAuthenticationProvider(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(authProvider);
     }
 
@@ -71,16 +79,23 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+            .csrf(csfr -> csfr.ignoringRequestMatchers("/db-console/**"))
+            .headers(headers -> headers
+                .frameOptions(frameOptions -> frameOptions
+                    .sameOrigin()))
             .authorizeHttpRequests((authz) -> authz
             .requestMatchers("/token").permitAll()
             .requestMatchers("/").permitAll()
+            .requestMatchers("/db-console/**").permitAll()
             .requestMatchers("/swagger-ui/**").permitAll()
-            .requestMatchers("v3/api-docs/**").permitAll()
+            .requestMatchers("/v3/api-docs/**").permitAll()
             .requestMatchers("/test").authenticated()
             )
-            .oauth2ResourceServer(oAuth -> oAuth.jwt(Customizer.withDefaults())
+            .oauth2ResourceServer(oAuth -> oAuth
+                .jwt(Customizer.withDefaults())
             )
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            .sessionManagement(session -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
             // TODO only for testing
             http.csrf(AbstractHttpConfigurer::disable);
