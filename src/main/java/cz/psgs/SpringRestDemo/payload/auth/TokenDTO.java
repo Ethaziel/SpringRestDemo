@@ -1,5 +1,5 @@
 package cz.psgs.SpringRestDemo.payload.auth;
 
-public record Token(String token) {
+public record TokenDTO(String token) {
     
 }
