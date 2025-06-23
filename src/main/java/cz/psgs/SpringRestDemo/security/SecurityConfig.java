@@ -87,7 +87,7 @@ public class SecurityConfig {
             .requestMatchers("/db-console/**").permitAll()
             .requestMatchers("/swagger-ui/**").permitAll()
             .requestMatchers("/v3/api-docs/**").permitAll()
-            .requestMatchers("/auth/token").permitAll()
+            .requestMatchers("/auth/**").permitAll()
             .requestMatchers("/test").authenticated()
             )
             .oauth2ResourceServer(oAuth -> oAuth
