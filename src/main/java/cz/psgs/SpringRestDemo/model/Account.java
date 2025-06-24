@@ -22,5 +22,5 @@ public class Account {
 
     private String password;
 
-    private String role;
+    private String authorities;
 }

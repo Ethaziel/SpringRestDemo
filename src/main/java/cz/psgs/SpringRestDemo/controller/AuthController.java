@@ -28,6 +28,7 @@ import cz.psgs.SpringRestDemo.util.constants.AccountError;
 import cz.psgs.SpringRestDemo.util.constants.AccountSuccess;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -88,11 +89,14 @@ public class AuthController {
 
     @GetMapping(value = "/users", produces = "application/json")
     @ApiResponse(responseCode = "200", description = "List of users")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "403", description = "Token error")
     @Operation(summary = "List user api")
+    @SecurityRequirement(name = "psgs-demo-api")
     public List<AccountViewDTO> users(){
         List<AccountViewDTO> accounts = new ArrayList<>();
         for (Account acc : accountService.findAll()){
-            accounts.add(new AccountViewDTO(acc.getId(), acc.getEmail(), acc.getRole()));
+            accounts.add(new AccountViewDTO(acc.getId(), acc.getEmail(), acc.getAuthorities()));
         }
         return accounts;
     }

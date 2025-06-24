@@ -82,12 +82,14 @@ public class SecurityConfig {
                 .frameOptions(frameOptions -> frameOptions
                     .sameOrigin()))
             .authorizeHttpRequests((authz) -> authz
-            .requestMatchers("/token").permitAll()
+            .requestMatchers("/auth/token").permitAll()
+            .requestMatchers("/auth/users/add").permitAll()
+            .requestMatchers("/auth/users").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/").permitAll()
             .requestMatchers("/db-console/**").permitAll()
             .requestMatchers("/swagger-ui/**").permitAll()
             .requestMatchers("/v3/api-docs/**").permitAll()
-            .requestMatchers("/auth/**").permitAll()
+            //.requestMatchers("/auth/**").permitAll()
             .requestMatchers("/test").authenticated()
             )
             .oauth2ResourceServer(oAuth -> oAuth
