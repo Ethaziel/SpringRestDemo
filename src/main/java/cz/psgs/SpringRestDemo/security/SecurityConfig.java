@@ -88,6 +88,7 @@ public class SecurityConfig {
             .requestMatchers("/auth/users/{user_id}/update-authorities").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/auth/profile").authenticated()
             .requestMatchers("/auth/profile/update-password").authenticated()
+            .requestMatchers("/auth/profile/delete").authenticated()
             .requestMatchers("/").permitAll()
             .requestMatchers("/db-console/**").permitAll()
             .requestMatchers("/swagger-ui/**").permitAll()

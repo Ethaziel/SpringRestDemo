@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -158,9 +159,27 @@ public class AuthController {
         account.setPassword(passwordDTO.getPassword());
         accountService.save(account);
         return new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities());
-       
-
     }
+
+
+    @DeleteMapping(value = "/profile/delete")
+    @ApiResponse(responseCode = "200", description = "Update password")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "403", description = "Token error")
+    @Operation(summary = "Delete profile")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public ResponseEntity<String> deleteProfile(Authentication authentication){
+        String email = authentication.getName();
+        Optional<Account> optionalAccount = accountService.findByEmail(email);
+        
+        if (optionalAccount.isPresent()){
+            accountService.deleteById(optionalAccount.get().getId());
+            return ResponseEntity.ok("User deleted");
+        }
+
+        return new ResponseEntity<String>("Bad request", HttpStatus.BAD_REQUEST);
+
+        }
 
     
 
