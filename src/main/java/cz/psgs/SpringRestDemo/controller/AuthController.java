@@ -12,7 +12,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import cz.psgs.SpringRestDemo.model.Account;
 import cz.psgs.SpringRestDemo.payload.auth.AccountDTO;
 import cz.psgs.SpringRestDemo.payload.auth.AccountViewDTO;
+import cz.psgs.SpringRestDemo.payload.auth.AuthoritiesDTO;
+import cz.psgs.SpringRestDemo.payload.auth.PasswordDTO;
 import cz.psgs.SpringRestDemo.payload.auth.ProfileDTO;
 import cz.psgs.SpringRestDemo.payload.auth.TokenDTO;
 import cz.psgs.SpringRestDemo.payload.auth.UserLoginDTO;
@@ -90,7 +94,7 @@ public class AuthController {
     }
 
     @GetMapping(value = "/profile", produces = "application/json")
-    @ApiResponse(responseCode = "200", description = "List of users")
+    @ApiResponse(responseCode = "200", description = "View profile")
     @ApiResponse(responseCode = "401", description = "Token missing")
     @ApiResponse(responseCode = "403", description = "Token error")
     @Operation(summary = "View profile")
@@ -98,13 +102,66 @@ public class AuthController {
     public ProfileDTO profile(Authentication authentication){
         String email = authentication.getName();
         Optional<Account> optionalAccount = accountService.findByEmail(email);
-        if (optionalAccount.isPresent()){
-            Account account = optionalAccount.get();
-            ProfileDTO profileDTO = new ProfileDTO(account.getId(), account.getEmail(), account.getAuthorities());
-            return profileDTO;
-        }
-        return null;
+        
+        Account account = optionalAccount.get();
+        ProfileDTO profileDTO = new ProfileDTO(account.getId(), account.getEmail(), account.getAuthorities());
+        return profileDTO;
+        
 
     }
+    @GetMapping(value = "/users", produces = "application/json")
+    @ApiResponse(responseCode = "200", description = "List of users")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "403", description = "Token error")
+    @Operation(summary = "List user API")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public List<AccountViewDTO> users(Authentication authentication){
+        List<AccountViewDTO> accounts = new ArrayList<>();
+        for (Account account : accountService.findAll()){
+            accounts.add(new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities()));
+        }
+        return accounts;
+
+    }
+
+    @PutMapping(value = "/users/{user_id}/update-authorities", produces = "application/json", consumes = "application/json")
+    @ApiResponse(responseCode = "200", description = "Update authorities")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "400", description = "Invalid user")
+    @ApiResponse(responseCode = "403", description = "Token error")
+    @Operation(summary = "Update authorities")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public ResponseEntity<AccountViewDTO> updateAuth(@Valid @RequestBody AuthoritiesDTO authoritiesDTO, @PathVariable long user_id){
+        
+        Optional<Account> optionalAccount = accountService.findById(user_id);
+        if (optionalAccount.isPresent()){
+            Account account = optionalAccount.get();
+            account.setAuthorities(authoritiesDTO.getAuthorities());
+            accountService.save(account);
+            return ResponseEntity.ok(new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities()));
+        }
+        return new ResponseEntity<AccountViewDTO>(new AccountViewDTO(), HttpStatus.BAD_REQUEST);
+
+    }
+
+    @PutMapping(value = "/profile/update-password", produces = "application/json", consumes = "application/json")
+    @ApiResponse(responseCode = "200", description = "Update password")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "403", description = "Token error")
+    @Operation(summary = "Update password")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public AccountViewDTO updatePassword(@Valid @RequestBody PasswordDTO passwordDTO, Authentication authentication){
+        String email = authentication.getName();
+        Optional<Account> optionalAccount = accountService.findByEmail(email);
+        
+        Account account = optionalAccount.get();
+        account.setPassword(passwordDTO.getPassword());
+        accountService.save(account);
+        return new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities());
+       
+
+    }
+
+    
 
 }
