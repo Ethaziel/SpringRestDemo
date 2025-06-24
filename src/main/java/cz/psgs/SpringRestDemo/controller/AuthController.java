@@ -2,6 +2,7 @@ package cz.psgs.SpringRestDemo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cz.psgs.SpringRestDemo.model.Account;
 import cz.psgs.SpringRestDemo.payload.auth.AccountDTO;
 import cz.psgs.SpringRestDemo.payload.auth.AccountViewDTO;
+import cz.psgs.SpringRestDemo.payload.auth.ProfileDTO;
 import cz.psgs.SpringRestDemo.payload.auth.TokenDTO;
 import cz.psgs.SpringRestDemo.payload.auth.UserLoginDTO;
 import cz.psgs.SpringRestDemo.service.AccountService;
@@ -87,18 +89,22 @@ public class AuthController {
         }
     }
 
-    @GetMapping(value = "/users", produces = "application/json")
+    @GetMapping(value = "/profile", produces = "application/json")
     @ApiResponse(responseCode = "200", description = "List of users")
     @ApiResponse(responseCode = "401", description = "Token missing")
     @ApiResponse(responseCode = "403", description = "Token error")
-    @Operation(summary = "List user api")
+    @Operation(summary = "View profile")
     @SecurityRequirement(name = "psgs-demo-api")
-    public List<AccountViewDTO> users(){
-        List<AccountViewDTO> accounts = new ArrayList<>();
-        for (Account acc : accountService.findAll()){
-            accounts.add(new AccountViewDTO(acc.getId(), acc.getEmail(), acc.getAuthorities()));
+    public ProfileDTO profile(Authentication authentication){
+        String email = authentication.getName();
+        Optional<Account> optionalAccount = accountService.findByEmail(email);
+        if (optionalAccount.isPresent()){
+            Account account = optionalAccount.get();
+            ProfileDTO profileDTO = new ProfileDTO(account.getId(), account.getEmail(), account.getAuthorities());
+            return profileDTO;
         }
-        return accounts;
+        return null;
+
     }
 
 }
