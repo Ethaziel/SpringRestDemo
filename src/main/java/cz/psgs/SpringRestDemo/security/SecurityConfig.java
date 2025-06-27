@@ -89,8 +89,10 @@ public class SecurityConfig {
             .requestMatchers("/auth/profile").authenticated()
             .requestMatchers("/auth/profile/update-password").authenticated()
             .requestMatchers("/auth/profile/delete").authenticated()
-            .requestMatchers("/album/**").authenticated()
+            .requestMatchers("/albums/**").authenticated()
             .requestMatchers("/").permitAll()
+            /* .requestMatchers("/uploads/**").permitAll() */
+            .requestMatchers("/resources/**").permitAll()
             .requestMatchers("/db-console/**").permitAll()
             .requestMatchers("/swagger-ui/**").permitAll()
             .requestMatchers("/v3/api-docs/**").permitAll()
