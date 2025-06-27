@@ -1,13 +1,18 @@
 package cz.psgs.SpringRestDemo.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+
+import javax.imageio.ImageIO;
 
 import org.apache.commons.text.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +51,11 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "Album Controller", description = "Controller for album and photo management")
 @Slf4j
 public class AlbumController {
+
+    static final String PHOTOS_FOLDER_NAME = "photos";
+    static final String THUMBNAIL_FOLDER_NAME = "thumbnails";
+    static final int THUMBNAIL_WIDTH = 300;
+
 
     @Autowired
     private AccountService accountService;
@@ -104,7 +114,7 @@ public class AlbumController {
     @ApiResponse(responseCode = "400", description = "Please check the payload or token")
     @Operation(summary = "Upload photos into album")
     @SecurityRequirement(name = "psgs-demo-api")
-    public ResponseEntity<List<String>> photos(@RequestPart(required = true) MultipartFile[] files, @PathVariable long album_id, Authentication authentication){
+    public ResponseEntity<List<HashMap<String, List<String>>>> photos(@RequestPart(required = true) MultipartFile[] files, @PathVariable long album_id, Authentication authentication){
         String email = authentication.getName();
         Optional<Account> optionalAccount = accountService.findByEmail(email);
         Account account = optionalAccount.get();
@@ -138,7 +148,7 @@ public class AlbumController {
                     .build();
                     String generatedString = generator.generate(length);
                     String finalPhotoName = generatedString + fileName;
-                    String absoluteFileLocation = AppUtil.getPhotoUploadPath(finalPhotoName, album_id);
+                    String absoluteFileLocation = AppUtil.getPhotoUploadPath(finalPhotoName, PHOTOS_FOLDER_NAME, album_id);
                     Path path = Paths.get(absoluteFileLocation);
                     Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                     Photo photo = new Photo();
@@ -148,17 +158,29 @@ public class AlbumController {
                     photo.setAlbum(album);
                     photoService.save(photo);
 
-                    
+                    BufferedImage thumbImage = AppUtil.getThumbnail(file, THUMBNAIL_WIDTH);
+
+                    File thumbnailLocation = new File(AppUtil.getPhotoUploadPath(finalPhotoName, THUMBNAIL_FOLDER_NAME, album_id));
+                    ImageIO.write(thumbImage, file.getContentType().split("/")[1], thumbnailLocation);
 
                 } catch (Exception e) {
-                    // TODO: handle exception
+                    log.debug(AlbumError.PHOTO_UPLOAD_ERROR.toString() + ": " + e.getMessage());
+                    fileNamesWithError.add(file.getOriginalFilename());
                 }
             } else {
                 fileNamesWithError.add(file.getOriginalFilename());
             }
+            
         
         });
 
-        return ResponseEntity.ok(fileNamesWithSuccess);
+        HashMap<String, List<String>> result = new HashMap<>();
+        result.put("SUCCESS", fileNamesWithSuccess);
+        result.put("ERRORS", fileNamesWithError);
+
+        List<HashMap<String, List<String>>> response = new ArrayList<>();
+        response.add(result);
+
+        return ResponseEntity.ok(response);
     }
 }
