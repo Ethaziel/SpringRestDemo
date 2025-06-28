@@ -43,6 +43,7 @@ import cz.psgs.SpringRestDemo.service.PhotoService;
 import cz.psgs.SpringRestDemo.util.appUtils.AppUtil;
 import cz.psgs.SpringRestDemo.util.constants.AlbumError;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -189,8 +190,26 @@ public class AlbumController {
 
     @GetMapping("albums/{album_id}/photos/{photo_id}/download-photo")
     @SecurityRequirement(name = "psgs-demo-api")
+    @Operation(summary = "Download photo")
+    @ApiResponse(responseCode = "200", description = "Photo file", content = @Content(mediaType = "application/octet-stream"))
     public ResponseEntity<?> downloadPhoto(@PathVariable("album_id") long album_id, 
                         @PathVariable("photo_id") long photo_id, Authentication authentication){
+        
+        return downloadFile(album_id, photo_id, PHOTOS_FOLDER_NAME, authentication);
+    }
+
+    @GetMapping("albums/{album_id}/photos/{photo_id}/download-thumbnail")
+    @SecurityRequirement(name = "psgs-demo-api")
+    @Operation(summary = "Download thumbnail")
+    @ApiResponse(responseCode = "200", description = "Thumbnail file", content = @Content(mediaType = "application/octet-stream"))
+    public ResponseEntity<?> downloadThumbnail(@PathVariable("album_id") long album_id, 
+                        @PathVariable("photo_id") long photo_id, Authentication authentication){
+        
+        return downloadFile(album_id, photo_id, THUMBNAIL_FOLDER_NAME, authentication);
+
+    }
+
+    public ResponseEntity<?> downloadFile(long album_id, long photo_id, String folderName, Authentication authentication){
         String email = authentication.getName();
         Optional<Account> optionalAccount = accountService.findByEmail(email);
         Account account = optionalAccount.get();
@@ -210,7 +229,7 @@ public class AlbumController {
             Photo photo = optionalPhoto.get();
             Resource resource = null;
             try {
-                resource = AppUtil.getFileAsResource(album_id, PHOTOS_FOLDER_NAME, photo.getFileName());
+                resource = AppUtil.getFileAsResource(album_id, folderName, photo.getFileName());
 
             } catch (Exception e) {
                 return ResponseEntity.internalServerError().build();
@@ -230,7 +249,6 @@ public class AlbumController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-
     }
 
 }
