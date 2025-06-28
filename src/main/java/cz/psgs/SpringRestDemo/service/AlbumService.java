@@ -19,6 +19,10 @@ public class AlbumService {
         return albumRepository.save(album);
     }
 
+    public void deleteAlbum (Album album){
+        albumRepository.delete(album);
+    }
+
     public List<Album> findByAccount_id(long id){
         return albumRepository.findByAccount_id(id);
     }

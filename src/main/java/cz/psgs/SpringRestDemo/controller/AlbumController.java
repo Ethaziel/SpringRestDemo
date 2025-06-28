@@ -398,7 +398,7 @@ public class AlbumController {
 
     @DeleteMapping(value = "albums/{album_id}/photos/{photo_id}/delete")
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiResponse(responseCode = "202", description = "Photo delete")
+    @ApiResponse(responseCode = "202", description = "Photo deleted")
     @Operation(summary = "Delete a photo")
     @SecurityRequirement(name = "psgs-demo-api")
     public ResponseEntity<String> deletePhoto(@PathVariable long album_id, 
@@ -433,6 +433,40 @@ public class AlbumController {
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
             }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @DeleteMapping(value = "albums/{album_id}/delete")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponse(responseCode = "202", description = "Album deleted")
+    @Operation(summary = "Delete an album")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public ResponseEntity<String> deleteAlbum(@PathVariable long album_id, Authentication authentication){
+        try {
+            String email = authentication.getName();
+            Optional<Account> optionalAccount = accountService.findByEmail(email);
+            Account account = optionalAccount.get();
+            Optional<Album> optionalAlbum = albumService.findById(album_id);
+            Album album;
+            if (optionalAlbum.isPresent()){
+                album = optionalAlbum.get();
+                if (account.getId() != album.getAccount().getId()){
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+
+            for (Photo photo : photoService.findByAlbumId(album.getId())){
+                AppUtil.deletePhotoFromPath(photo.getFileName(), PHOTOS_FOLDER_NAME, album_id);
+                AppUtil.deletePhotoFromPath(photo.getFileName(), THUMBNAIL_FOLDER_NAME, album_id);
+                photoService.delete(photo);
+            }
+            albumService.deleteAlbum(album);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
