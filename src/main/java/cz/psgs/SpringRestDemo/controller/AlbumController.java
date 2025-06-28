@@ -95,6 +95,51 @@ public class AlbumController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
+    
+    @PostMapping(value = "albums/{album_id}/update", produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponse(responseCode = "400", description = "Please add valid name and description")
+    @ApiResponse(responseCode = "204", description = "Album updated")
+    @Operation(summary = "Update an album")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public ResponseEntity<AlbumViewDTO> updateAlbum(@Valid @RequestBody AlbumPayloadDTO albumPayloadDTO, 
+                        @PathVariable long album_id, Authentication authentication){
+        try {
+            String email = authentication.getName();
+            Optional<Account> optionalAccount = accountService.findByEmail(email);
+            Account account = optionalAccount.get();
+
+            Optional<Album> optionalAlbum = albumService.findById(album_id);
+            Album album;
+            if (optionalAlbum.isPresent()){
+                album = optionalAlbum.get();
+                if (account.getId() != album.getAccount().getId()){
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+            
+            album.setName(albumPayloadDTO.getName());
+            album.setDescription(albumPayloadDTO.getDescription());
+            album = albumService.save(album);
+
+            List<PhotoDTO> photos = new ArrayList<>();
+            for (Photo photo : photoService.findByAlbumId(album.getId())){
+                String link = "/albums/" + album.getId() + "/photos/" + photo.getId() + "/download-photo";
+                photos.add(new PhotoDTO(photo.getId(), photo.getName(), photo.getDescription(), 
+                                        photo.getFileName(), link));
+                
+            }
+
+            AlbumViewDTO albumViewDTO = new AlbumViewDTO(album.getId(), album.getName(), album.getDescription(), photos);
+            return ResponseEntity.ok(albumViewDTO);
+
+        } catch (Exception e) {
+            log.debug(AlbumError.ADD_ALBUM_ERROR.toString() + ": " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
 
     @GetMapping(value = "albums/", produces = "application/json")
     @ApiResponse(responseCode = "200", description = "List of albums")
