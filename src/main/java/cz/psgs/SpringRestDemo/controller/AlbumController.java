@@ -37,6 +37,7 @@ import cz.psgs.SpringRestDemo.model.Album;
 import cz.psgs.SpringRestDemo.model.Photo;
 import cz.psgs.SpringRestDemo.payload.auth.album.AlbumPayloadDTO;
 import cz.psgs.SpringRestDemo.payload.auth.album.AlbumViewDTO;
+import cz.psgs.SpringRestDemo.payload.auth.album.PhotoDTO;
 import cz.psgs.SpringRestDemo.service.AccountService;
 import cz.psgs.SpringRestDemo.service.AlbumService;
 import cz.psgs.SpringRestDemo.service.PhotoService;
@@ -86,7 +87,7 @@ public class AlbumController {
             Account account = optionalAccount.get();
             album.setAccount(account);
             album = albumService.save(album);
-            AlbumViewDTO albumViewDTO = new AlbumViewDTO(album.getId(), album.getName(), album.getDescription());
+            AlbumViewDTO albumViewDTO = new AlbumViewDTO(album.getId(), album.getName(), album.getDescription(), null);
             return ResponseEntity.ok(albumViewDTO);
 
         } catch (Exception e) {
@@ -108,7 +109,17 @@ public class AlbumController {
 
         List<AlbumViewDTO> albums = new ArrayList<>();
         for(Album album : albumService.findByAccount_id(account.getId())){
-            albums.add(new AlbumViewDTO(album.getId(), album.getName(), album.getDescription()));
+            
+
+            List<PhotoDTO> photos = new ArrayList<>();
+            for (Photo photo : photoService.findByAlbumId(album.getId())){
+                String link = "/albums/" + album.getId() + "/photos/" + photo.getId() + "/download-photo";
+                photos.add(new PhotoDTO(photo.getId(), photo.getName(), photo.getDescription(), 
+                                        photo.getFileName(), link));
+                
+            }
+            albums.add(new AlbumViewDTO(album.getId(), album.getName(), album.getDescription(), photos));
+            
         }
 
         return albums;
