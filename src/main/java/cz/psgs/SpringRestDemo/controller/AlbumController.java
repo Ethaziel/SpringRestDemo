@@ -25,6 +25,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -38,6 +39,8 @@ import cz.psgs.SpringRestDemo.model.Photo;
 import cz.psgs.SpringRestDemo.payload.auth.album.AlbumPayloadDTO;
 import cz.psgs.SpringRestDemo.payload.auth.album.AlbumViewDTO;
 import cz.psgs.SpringRestDemo.payload.auth.album.PhotoDTO;
+import cz.psgs.SpringRestDemo.payload.auth.album.PhotoPayloadDTO;
+import cz.psgs.SpringRestDemo.payload.auth.album.PhotoViewDTO;
 import cz.psgs.SpringRestDemo.service.AccountService;
 import cz.psgs.SpringRestDemo.service.AlbumService;
 import cz.psgs.SpringRestDemo.service.PhotoService;
@@ -96,7 +99,7 @@ public class AlbumController {
         }
     }
     
-    @PostMapping(value = "albums/{album_id}/update", produces = "application/json", consumes = "application/json")
+    @PutMapping(value = "albums/{album_id}/update", produces = "application/json", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiResponse(responseCode = "400", description = "Please add valid name and description")
     @ApiResponse(responseCode = "204", description = "Album updated")
@@ -276,6 +279,48 @@ public class AlbumController {
         response.add(result);
 
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping(value = "albums/{album_id}/photos/{photo_id}/update", produces = "application/json", consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponse(responseCode = "400", description = "Please add valid name and description")
+    @ApiResponse(responseCode = "204", description = "Photo updated")
+    @Operation(summary = "Update a photo")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public ResponseEntity<PhotoViewDTO> updatePhoto(@Valid @RequestBody PhotoPayloadDTO photoPayloadDTO, 
+                        @PathVariable long album_id, @PathVariable long photo_id, Authentication authentication){
+        try {
+            String email = authentication.getName();
+            Optional<Account> optionalAccount = accountService.findByEmail(email);
+            Account account = optionalAccount.get();
+
+            Optional<Album> optionalAlbum = albumService.findById(album_id);
+            Album album;
+            if (optionalAlbum.isPresent()){
+                album = optionalAlbum.get();
+                if (account.getId() != album.getAccount().getId()){
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+            
+            Optional<Photo> optionalPhoto = photoService.findById(photo_id);
+            if (optionalPhoto.isPresent()){
+                Photo photo = optionalPhoto.get();
+                photo.setName(photoPayloadDTO.getName());
+                photo.setDescription(photoPayloadDTO.getDescription());
+                photoService.save(photo);
+                PhotoViewDTO photoViewDTO = new PhotoViewDTO(photo.getId(), photo.getName(), photo.getDescription());
+                return ResponseEntity.ok(photoViewDTO);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+
+        } catch (Exception e) {
+            log.debug(AlbumError.ADD_ALBUM_ERROR.toString() + ": " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
 
     @GetMapping("albums/{album_id}/photos/{photo_id}/download-photo")
