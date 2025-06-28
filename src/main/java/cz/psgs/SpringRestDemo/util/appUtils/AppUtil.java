@@ -16,8 +16,11 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.web.multipart.MultipartFile;
 
 public class AppUtil {
+
+    public static String PATH = "src\\main\\resources\\static\\uploads\\";
+
     public static String getPhotoUploadPath (String fileName, String folder_name, long album_id) throws IOException{
-        String path = "src\\main\\resources\\static\\uploads\\" + album_id + "\\" + folder_name;
+        String path = PATH + album_id + "\\" + folder_name;
         
         Files.createDirectories(Paths.get(path));
         
@@ -40,6 +43,20 @@ public class AppUtil {
             return new UrlResource(path.toUri());
         } else {
             return null;
+        }
+    }
+
+    public static boolean deletePhotoFromPath(String fileName, String folderName, long album_id) {
+        try {
+            File f = new File(PATH + album_id + "\\" + folderName + "\\" + fileName); // file to delete
+            if (f.delete()){
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 }

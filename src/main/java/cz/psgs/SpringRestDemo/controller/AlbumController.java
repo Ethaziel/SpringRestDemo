@@ -22,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -211,7 +212,7 @@ public class AlbumController {
     @ApiResponse(responseCode = "400", description = "Please check the payload or token")
     @Operation(summary = "Upload photos into album")
     @SecurityRequirement(name = "psgs-demo-api")
-    public ResponseEntity<List<HashMap<String, List<String>>>> photos(@RequestPart(required = true) MultipartFile[] files, @PathVariable long album_id, Authentication authentication){
+    public ResponseEntity<List<HashMap<String, List<?>>>> photos(@RequestPart(required = true) MultipartFile[] files, @PathVariable long album_id, Authentication authentication){
         String email = authentication.getName();
         Optional<Account> optionalAccount = accountService.findByEmail(email);
         Account account = optionalAccount.get();
@@ -227,14 +228,14 @@ public class AlbumController {
         }
         
         
-        List<String> fileNamesWithSuccess = new ArrayList<>();
+        List<PhotoViewDTO> fileNamesWithSuccess = new ArrayList<>();
         List<String> fileNamesWithError = new ArrayList<>();
 
 
         Arrays.asList(files).stream().forEach(file -> {
             String contentType = file.getContentType();
             if (contentType.equals("image/png") || contentType.equals("image/jpg") || contentType.equals("image/jpeg")){
-                fileNamesWithSuccess.add(file.getOriginalFilename());
+                //fileNamesWithSuccess.add(file.getOriginalFilename());
                 int length = 10;
                 /* boolean useLetters = true;
                 boolean useNumbers = true; */
@@ -255,6 +256,9 @@ public class AlbumController {
                     photo.setAlbum(album);
                     photoService.save(photo);
 
+                    PhotoViewDTO photoViewDTO = new PhotoViewDTO(photo.getId(), photo.getName(), photo.getDescription());
+                    fileNamesWithSuccess.add(photoViewDTO);
+
                     BufferedImage thumbImage = AppUtil.getThumbnail(file, THUMBNAIL_WIDTH);
 
                     File thumbnailLocation = new File(AppUtil.getPhotoUploadPath(finalPhotoName, THUMBNAIL_FOLDER_NAME, album_id));
@@ -271,11 +275,11 @@ public class AlbumController {
         
         });
 
-        HashMap<String, List<String>> result = new HashMap<>();
+        HashMap<String, List<?>> result = new HashMap<>();
         result.put("SUCCESS", fileNamesWithSuccess);
         result.put("ERRORS", fileNamesWithError);
 
-        List<HashMap<String, List<String>>> response = new ArrayList<>();
+        List<HashMap<String, List<?>>> response = new ArrayList<>();
         response.add(result);
 
         return ResponseEntity.ok(response);
@@ -308,6 +312,9 @@ public class AlbumController {
             Optional<Photo> optionalPhoto = photoService.findById(photo_id);
             if (optionalPhoto.isPresent()){
                 Photo photo = optionalPhoto.get();
+                if (photo.getAlbum().getId() != album_id){
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                }
                 photo.setName(photoPayloadDTO.getName());
                 photo.setDescription(photoPayloadDTO.getDescription());
                 photoService.save(photo);
@@ -362,6 +369,9 @@ public class AlbumController {
         Optional<Photo> optionalPhoto = photoService.findById(photo_id);
         if(optionalPhoto.isPresent()){
             Photo photo = optionalPhoto.get();
+            if (photo.getAlbum().getId() != album_id){
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            }
             Resource resource = null;
             try {
                 resource = AppUtil.getFileAsResource(album_id, folderName, photo.getFileName());
@@ -382,6 +392,49 @@ public class AlbumController {
                         .body(resource);
 
         } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
+    @DeleteMapping(value = "albums/{album_id}/photos/{photo_id}/delete")
+    @ResponseStatus(HttpStatus.CREATED)
+    @ApiResponse(responseCode = "202", description = "Photo delete")
+    @Operation(summary = "Delete a photo")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public ResponseEntity<String> deletePhoto(@PathVariable long album_id, 
+                    @PathVariable long photo_id, Authentication authentication){
+        try {
+            String email = authentication.getName();
+            Optional<Account> optionalAccount = accountService.findByEmail(email);
+            Account account = optionalAccount.get();
+            Optional<Album> optionalAlbum = albumService.findById(album_id);
+            Album album;
+            if (optionalAlbum.isPresent()){
+                album = optionalAlbum.get();
+                if (account.getId() != album.getAccount().getId()){
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+
+            Optional<Photo> optionalPhoto = photoService.findById(photo_id);
+            if(optionalPhoto.isPresent()){
+                Photo photo = optionalPhoto.get();
+                if (photo.getAlbum().getId() != album_id){
+                        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                }
+
+                AppUtil.deletePhotoFromPath(photo.getFileName(), PHOTOS_FOLDER_NAME, album_id);
+                AppUtil.deletePhotoFromPath(photo.getFileName(), THUMBNAIL_FOLDER_NAME, album_id);
+                photoService.delete(photo);
+
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
