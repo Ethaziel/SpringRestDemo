@@ -194,4 +194,78 @@ Consider defining a bean of type 'cz.psgs.SpringRestDemo.repository.AccountRepos
  2025-06-28 10:23:21,092 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
  2025-06-28 10:23:21,094 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 1 ms
  2025-06-28 10:23:36,235 [INFO] org.springdoc.api.AbstractOpenApiResource [http-nio-8080-exec-8] Init duration for springdoc-openapi is: 321 ms
+ 2025-06-28 11:16:56,204 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Starting SpringRestDemoApplication using Java 21.0.6 with PID 20116 (C:\Users\petrs\Documents\Programování\SpringRestDemo\target\classes started by petrs in C:\Users\petrs\Documents\Programování\SpringRestDemo)
+ 2025-06-28 11:16:56,206 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] No active profile set, falling back to 1 default profile: "default"
+ 2025-06-28 11:16:57,825 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+ 2025-06-28 11:16:57,914 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 75 ms. Found 3 JPA repository interfaces.
+ 2025-06-28 11:16:58,651 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
+ 2025-06-28 11:16:58,669 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+ 2025-06-28 11:16:58,670 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.42]
+ 2025-06-28 11:16:58,753 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+ 2025-06-28 11:16:58,754 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2484 ms
+ 2025-06-28 11:16:59,188 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+ 2025-06-28 11:16:59,257 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.18.Final
+ 2025-06-28 11:16:59,315 [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
+ 2025-06-28 11:16:59,769 [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+ 2025-06-28 11:16:59,818 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+ 2025-06-28 11:17:00,119 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
+ 2025-06-28 11:17:00,123 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+ 2025-06-28 11:17:00,158 [WARN] org.hibernate.orm.deprecation [main] HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+ 2025-06-28 11:17:00,185 [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+ 2025-06-28 11:17:01,257 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+ 2025-06-28 11:17:01,303 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+ 2025-06-28 11:17:02,341 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+ 2025-06-28 11:17:02,798 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint beneath base path '/actuator'
+ 2025-06-28 11:17:02,835 [INFO] org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer [main] Global AuthenticationManager configured with UserDetailsService bean with name accountService
+ 2025-06-28 11:17:03,483 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
+ 2025-06-28 11:17:03,617 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
+ 2025-06-28 11:17:03,633 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Started SpringRestDemoApplication in 8.049 seconds (process running for 8.823)
+ 2025-06-28 11:17:04,797 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+ 2025-06-28 11:17:04,797 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+ 2025-06-28 11:17:04,799 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 1 ms
+ 2025-06-28 11:17:21,075 [INFO] org.springdoc.api.AbstractOpenApiResource [http-nio-8080-exec-8] Init duration for springdoc-openapi is: 348 ms
+ 2025-06-28 11:48:28,345 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Starting SpringRestDemoApplication using Java 21.0.6 with PID 3000 (C:\Users\petrs\Documents\Programování\SpringRestDemo\target\classes started by petrs in C:\Users\petrs\Documents\Programování\SpringRestDemo)
+ 2025-06-28 11:48:28,347 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] No active profile set, falling back to 1 default profile: "default"
+ 2025-06-28 11:48:29,963 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+ 2025-06-28 11:48:30,043 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 65 ms. Found 3 JPA repository interfaces.
+ 2025-06-28 11:48:30,844 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
+ 2025-06-28 11:48:30,859 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+ 2025-06-28 11:48:30,859 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.42]
+ 2025-06-28 11:48:30,943 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+ 2025-06-28 11:48:30,943 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2520 ms
+ 2025-06-28 11:48:31,334 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+ 2025-06-28 11:48:31,421 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.18.Final
+ 2025-06-28 11:48:31,482 [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
+ 2025-06-28 11:48:31,858 [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+ 2025-06-28 11:48:31,896 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+ 2025-06-28 11:48:32,143 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
+ 2025-06-28 11:48:32,145 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+ 2025-06-28 11:48:32,169 [WARN] org.hibernate.orm.deprecation [main] HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+ 2025-06-28 11:48:32,190 [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+ 2025-06-28 11:48:33,139 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+ 2025-06-28 11:48:33,192 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+ 2025-06-28 11:48:34,189 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+ 2025-06-28 11:48:34,620 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint beneath base path '/actuator'
+ 2025-06-28 11:48:34,650 [INFO] org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer [main] Global AuthenticationManager configured with UserDetailsService bean with name accountService
+ 2025-06-28 11:48:35,239 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
+ 2025-06-28 11:48:35,384 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
+ 2025-06-28 11:48:35,405 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Started SpringRestDemoApplication in 7.683 seconds (process running for 8.394)
+ 2025-06-28 11:48:37,027 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+ 2025-06-28 11:48:37,028 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+ 2025-06-28 11:48:37,030 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 2 ms
+ 2025-06-28 11:49:31,203 [INFO] org.springdoc.api.AbstractOpenApiResource [http-nio-8080-exec-9] Init duration for springdoc-openapi is: 417 ms
  
