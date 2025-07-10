@@ -2,6 +2,7 @@ package cz.psgs.SpringRestDemo.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +58,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", maxAge = 3600)
 @RequestMapping("/")
 @Tag(name = "Album Controller", description = "Controller for album and photo management")
 @Slf4j
@@ -383,8 +386,27 @@ public class AlbumController {
                 return new ResponseEntity<>("File not found", HttpStatus.NOT_FOUND);
             }
 
-            String contentType = "application/octet-stream";
-            String headerValue = "attachment; filename=\"" + photo.getOriginalFileName() + "\"";
+            String contentType;
+            try {
+                contentType = Files.probeContentType(resource.getFile().toPath());
+                if (contentType == null) {
+                    contentType = "application/octet-stream";
+                }
+            } catch (IOException e) {
+                // Log the error and fallback to default
+                contentType = "application/octet-stream";
+            }
+            String headerValue = "inline; filename=\"" + photo.getOriginalFileName() + "\"";
+
+            try {
+                System.out.println("📁 Resolved file: " + resource.getFile().getAbsolutePath());
+                System.out.println("📏 Exists: " + resource.exists());
+                System.out.println("📖 Readable: " + resource.isReadable());
+                System.out.println("📦 Size: " + resource.contentLength());
+            } catch (IOException e) {
+                System.out.println("❌ Error accessing resource file: " + e.getMessage());
+                return ResponseEntity.internalServerError().body("Failed to access file");
+            }
 
             return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(contentType))

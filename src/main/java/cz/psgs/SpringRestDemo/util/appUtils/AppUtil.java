@@ -36,7 +36,7 @@ public class AppUtil {
     }
 
     public static Resource getFileAsResource(long album_id, String folderName, String fileName) throws IOException{
-        String location = "src\\main\\resources\\static\\uploads\\" + album_id + "\\" + folderName;
+        String location = PATH + album_id + "\\" + folderName + "\\" + fileName;
         File file = new File(location);
         if (file.exists()){
             Path path = Paths.get(file.getAbsolutePath());
