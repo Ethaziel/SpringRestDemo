@@ -398,16 +398,6 @@ public class AlbumController {
             }
             String headerValue = "inline; filename=\"" + photo.getOriginalFileName() + "\"";
 
-            try {
-                System.out.println("📁 Resolved file: " + resource.getFile().getAbsolutePath());
-                System.out.println("📏 Exists: " + resource.exists());
-                System.out.println("📖 Readable: " + resource.isReadable());
-                System.out.println("📦 Size: " + resource.contentLength());
-            } catch (IOException e) {
-                System.out.println("❌ Error accessing resource file: " + e.getMessage());
-                return ResponseEntity.internalServerError().body("Failed to access file");
-            }
-
             return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(contentType))
                         .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
