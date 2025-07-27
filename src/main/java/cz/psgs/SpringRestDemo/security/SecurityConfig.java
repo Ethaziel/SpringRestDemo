@@ -24,7 +24,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import lombok.var;
+// import lombok.var;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
 
