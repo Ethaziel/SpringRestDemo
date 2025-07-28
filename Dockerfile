@@ -1,22 +1,29 @@
-# Start from a base Java image
-FROM eclipse-temurin:17-jdk-alpine
-
-# Set the working directory inside the container
+# ---- Stage 1: Build the JAR ----
+FROM maven:3.9.6-eclipse-temurin-17-alpine AS build
 WORKDIR /app
 
-# Copy the JAR file
-COPY target/SpringRestDemo-0.0.1-SNAPSHOT.jar app.jar
+# Copy pom.xml and download dependencies
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Run the app
-#ENTRYPOINT ["java", "-jar", "app.jar"]
+# Copy the full source and build the app
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Expose the port for Render (Render provides the PORT env variable)
+# ---- Stage 2: Run the app ----
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+
+# Copy the jar from the build stage
+COPY --from=build /app/target/SpringRestDemo-0.0.1-SNAPSHOT.jar app.jar
+
+# Expose the port expected by Render (optional but good practice)
 EXPOSE 8080
 
-# Use the PORT provided by Render and set active profile
+# Set environment variables for Spring Boot
 ENV SPRING_PROFILES_ACTIVE=prod
 ENV SERVER_PORT=${PORT}
 
-# Run the application
+# Run the application using the dynamic port and profile
 ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
 
