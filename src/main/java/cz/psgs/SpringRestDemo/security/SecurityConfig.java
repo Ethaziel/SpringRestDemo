@@ -84,8 +84,8 @@ public class SecurityConfig {
             .authorizeHttpRequests((authz) -> authz
             .requestMatchers("/auth/token").permitAll()
             .requestMatchers("/auth/users/add").permitAll()
-            .requestMatchers("/auth/users").hasAuthority("SCOPE_ADMIN")
-            .requestMatchers("/auth/users/{user_id}/update-authorities").hasAuthority("SCOPE_ADMIN")
+            .requestMatchers("/auth/users").hasRole("ADMIN")
+            .requestMatchers("/auth/users/{user_id}/update-authorities").hasRole("ADMIN")
             .requestMatchers("/auth/profile").authenticated()
             .requestMatchers("/auth/profile/update-password").authenticated()
             .requestMatchers("/auth/profile/delete").authenticated()
