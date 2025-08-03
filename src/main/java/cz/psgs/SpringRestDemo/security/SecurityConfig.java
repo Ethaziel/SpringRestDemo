@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -40,7 +44,21 @@ public class SecurityConfig {
 
     private RSAKey rsaKeys;
 
-   
+    @Value("${frontend.origin}")
+    private String frontendOrigin;
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(frontendOrigin));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
     @Bean
     public JWKSource<SecurityContext> jwkSource(){
@@ -97,6 +115,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+            .cors(Customizer.withDefaults())
             .csrf(csfr -> csfr.ignoringRequestMatchers("/db-console/**"))
             .headers(headers -> headers
                 .frameOptions(frameOptions -> frameOptions
