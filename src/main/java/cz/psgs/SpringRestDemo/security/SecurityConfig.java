@@ -125,6 +125,7 @@ public class SecurityConfig {
             .requestMatchers("/auth/users/add").permitAll()
             .requestMatchers("/auth/users").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/auth/users/{user_id}/update-authorities").hasAuthority("SCOPE_ADMIN")
+            .requestMatchers("/auth/users/{user_id}/delete").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/auth/profile").authenticated()
             .requestMatchers("/auth/profile/update-password").authenticated()
             .requestMatchers("/auth/profile/delete").authenticated()
