@@ -2,12 +2,14 @@ package cz.psgs.SpringRestDemo.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import cz.psgs.SpringRestDemo.model.Account;
 import cz.psgs.SpringRestDemo.service.AccountService;
 import cz.psgs.SpringRestDemo.util.constants.Authority;
 
+@Profile("dev")
 @Component
 public class SeedData implements CommandLineRunner{
 

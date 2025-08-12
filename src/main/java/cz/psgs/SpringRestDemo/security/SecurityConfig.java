@@ -1,5 +1,10 @@
 package cz.psgs.SpringRestDemo.security;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,6 +14,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,7 +22,11 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -24,7 +34,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import lombok.var;
+// import lombok.var;
 
 import org.springframework.security.config.http.SessionCreationPolicy;
 
@@ -34,7 +44,21 @@ public class SecurityConfig {
 
     private RSAKey rsaKeys;
 
-   
+    @Value("${frontend.origin}")
+    private String frontendOrigin;
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(frontendOrigin));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 
     @Bean
     public JWKSource<SecurityContext> jwkSource(){
@@ -75,8 +99,23 @@ public class SecurityConfig {
     }
     
     @Bean
+    public JwtAuthenticationConverter jwtAuthenticationConverter() {
+        JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
+        converter.setJwtGrantedAuthoritiesConverter(jwt -> {
+            String scope = jwt.getClaimAsString("scope");
+            if (scope == null) return List.of();
+            return Arrays.stream(scope.split(" "))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+        });
+        return converter;
+    }
+
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+            .cors(Customizer.withDefaults())
             .csrf(csfr -> csfr.ignoringRequestMatchers("/db-console/**"))
             .headers(headers -> headers
                 .frameOptions(frameOptions -> frameOptions
@@ -86,6 +125,7 @@ public class SecurityConfig {
             .requestMatchers("/auth/users/add").permitAll()
             .requestMatchers("/auth/users").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/auth/users/{user_id}/update-authorities").hasAuthority("SCOPE_ADMIN")
+            .requestMatchers("/auth/users/{user_id}/delete").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/auth/profile").authenticated()
             .requestMatchers("/auth/profile/update-password").authenticated()
             .requestMatchers("/auth/profile/delete").authenticated()
@@ -99,8 +139,12 @@ public class SecurityConfig {
             //.requestMatchers("/auth/**").permitAll()
             .requestMatchers("/test").authenticated()
             )
-            .oauth2ResourceServer(oAuth -> oAuth
-                .jwt(Customizer.withDefaults())
+//            .oauth2ResourceServer(oAuth -> oAuth
+//                .jwt(Customizer.withDefaults())
+            .oauth2ResourceServer(oauth2 -> oauth2
+                .jwt(jwt -> jwt
+                    .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                )
             )
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

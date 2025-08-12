@@ -165,7 +165,7 @@ public class AuthController {
 
 
     @DeleteMapping(value = "/profile/delete")
-    @ApiResponse(responseCode = "200", description = "Update password")
+    @ApiResponse(responseCode = "200", description = "Delete profile")
     @ApiResponse(responseCode = "401", description = "Token missing")
     @ApiResponse(responseCode = "403", description = "Token error")
     @Operation(summary = "Delete profile")
@@ -174,14 +174,31 @@ public class AuthController {
         String email = authentication.getName();
         Optional<Account> optionalAccount = accountService.findByEmail(email);
         
+        return removeAccount(optionalAccount);
+
+    }
+
+    @DeleteMapping(value = "/users/{user_id}/delete")
+    @ApiResponse(responseCode = "200", description = "Delete user")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "403", description = "Token error")
+    @Operation(summary = "Delete user")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public ResponseEntity<String> deleteUser (@PathVariable long user_id){
+        Optional<Account> optionalAccount = accountService.findById(user_id);
+        
+        return removeAccount(optionalAccount);
+    }
+
+    private ResponseEntity<String> removeAccount(Optional<Account> optionalAccount){
+        
         if (optionalAccount.isPresent()){
             accountService.deleteById(optionalAccount.get().getId());
             return ResponseEntity.ok("User deleted");
         }
 
         return new ResponseEntity<String>("Bad request", HttpStatus.BAD_REQUEST);
-
-        }
+    }
 
     
 

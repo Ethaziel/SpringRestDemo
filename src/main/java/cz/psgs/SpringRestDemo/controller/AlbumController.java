@@ -396,11 +396,12 @@ public class AlbumController {
                 // Log the error and fallback to default
                 contentType = "application/octet-stream";
             }
-            String headerValue = "inline; filename=\"" + photo.getOriginalFileName() + "\"";
+            String headerValue = "attachment; filename=\"" + photo.getOriginalFileName() + "\"";
 
             return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(contentType))
                         .header(HttpHeaders.CONTENT_DISPOSITION, headerValue)
+                        .header("Access-Control-Expose-Headers", "Content-Disposition") 
                         .body(resource);
 
         } else {
