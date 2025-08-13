@@ -34,6 +34,7 @@ import cz.psgs.SpringRestDemo.service.AccountService;
 import cz.psgs.SpringRestDemo.service.TokenService;
 import cz.psgs.SpringRestDemo.util.constants.AccountError;
 import cz.psgs.SpringRestDemo.util.constants.AccountSuccess;
+import cz.psgs.SpringRestDemo.util.constants.Authority;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -198,6 +199,13 @@ public class AuthController {
         }
 
         return new ResponseEntity<String>("Bad request", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value = "/roles")
+    @SecurityRequirement(name = "psgs-demo-api")
+    @Operation(summary = "Get user roles")
+    public Authority[] getAuthorities(){
+        return Authority.values();
     }
 
     
