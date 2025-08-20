@@ -128,6 +128,7 @@ public class SecurityConfig {
             .requestMatchers("/auth/users/{user_id}/delete").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/auth/roles").hasAuthority("SCOPE_ADMIN")
             .requestMatchers("/auth/profile").authenticated()
+            .requestMatchers("/auth/profile/account").authenticated()
             .requestMatchers("/auth/profile/update-password").authenticated()
             .requestMatchers("/auth/profile/delete").authenticated()
             .requestMatchers("/albums/**").authenticated()

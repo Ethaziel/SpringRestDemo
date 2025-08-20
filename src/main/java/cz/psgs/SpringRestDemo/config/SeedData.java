@@ -25,6 +25,11 @@ public class SeedData implements CommandLineRunner{
         account01.setEmail("tatka@smoula.cz");
         account01.setPassword("tatka1");
         account01.setAuthorities(Authority.ADMIN.toString() + " " + Authority.USER.toString());
+        account01.setAge(89);
+        account01.setJob("Village manager");
+        account01.setName("Tatka Smoula");
+        account01.setPersonalInfo("Smart Smurf with magical powers, protects the village and fights Gargamel when necessary...");
+        account01.setMale(true);
         accountService.save(account01);
         
         account02.setEmail("koumak@smoula.cz");

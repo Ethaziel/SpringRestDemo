@@ -3,6 +3,7 @@ package cz.psgs.SpringRestDemo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -87,6 +88,18 @@ public class AuthController {
             Account account = new Account();
             account.setEmail(accountDTO.getEmail());
             account.setPassword(accountDTO.getPassword());
+            account.setAge(accountDTO.getAge());
+            account.setJob(accountDTO.getJob());
+            account.setName(accountDTO.getName());
+            account.setPersonalInfo(accountDTO.getPersonalInfo());
+            account.setMale(accountDTO.isMale());
+
+            if (accountDTO.getAvatar() != null && !accountDTO.getAvatar().isEmpty()){
+                account.setAvatar(accountDTO.getAvatar());
+            } else {
+                account.setAvatar(getRandomAvatar(account.isMale()));
+            }
+
             accountService.save(account);
 
             return ResponseEntity.ok(AccountSuccess.ACCOUNT_ADDED.toString());
@@ -164,6 +177,19 @@ public class AuthController {
         return new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities());
     }
 
+    @GetMapping(value = "/profile/account", produces = "application/json")
+    @ApiResponse(responseCode = "200", description = "Get account")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "403", description = "Token error")
+    @Operation(summary = "Get account info")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public AccountViewDTO getAccount(Authentication authentication){
+        String email = authentication.getName();
+        Optional<Account> optionalAccount = accountService.findByEmail(email);
+        Account acc = optionalAccount.get();
+        return new AccountViewDTO(acc.getId(), acc.getEmail(), acc.getAuthorities(), acc.getName(), acc.getJob(), acc.getAge(), acc.getPersonalInfo(), acc.isMale(), acc.getAvatar());
+    }
+
 
     @DeleteMapping(value = "/profile/delete")
     @ApiResponse(responseCode = "200", description = "Delete profile")
@@ -206,6 +232,19 @@ public class AuthController {
     @Operation(summary = "Get user roles")
     public Authority[] getAuthorities(){
         return Authority.values();
+    }
+
+    private String getRandomAvatar (boolean isMale){
+        String[] maleAvatars = { "avatar-male-1.png", "avatar-male-2.png", "avatar-male-3.png" };
+        String[] femaleAvatars = { "avatar-female-1.png", "avatar-female-2.png", "avatar-female-3.png" };
+        String [] avatars;
+        if (isMale){
+            avatars = maleAvatars;
+        } else {
+            avatars = femaleAvatars;
+        }
+        return avatars[new Random().nextInt(avatars.length)];
+    
     }
 
     
