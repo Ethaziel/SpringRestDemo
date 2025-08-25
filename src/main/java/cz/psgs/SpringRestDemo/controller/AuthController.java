@@ -121,7 +121,9 @@ public class AuthController {
         Optional<Account> optionalAccount = accountService.findByEmail(email);
         
         Account account = optionalAccount.get();
-        ProfileDTO profileDTO = new ProfileDTO(account.getId(), account.getEmail(), account.getAuthorities());
+        ProfileDTO profileDTO = new ProfileDTO(account.getId(), account.getEmail(), account.getAuthorities(), account.getName(), 
+                                                account.getJob(), account.getAge(), account.getPersonalInfo(), account.isMale(), 
+                                                account.getAvatar());
         return profileDTO;
         
 
@@ -135,7 +137,9 @@ public class AuthController {
     public List<AccountViewDTO> users(Authentication authentication){
         List<AccountViewDTO> accounts = new ArrayList<>();
         for (Account account : accountService.findAll()){
-            accounts.add(new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities()));
+            accounts.add(new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities(), account.getName(), 
+                                            account.getJob(), account.getAge(), account.getPersonalInfo(), account.isMale(), 
+                                            account.getAvatar()));
         }
         return accounts;
 
