@@ -135,7 +135,7 @@ public class AlbumController {
             for (Photo photo : photoService.findByAlbumId(album.getId())){
                 String link = "/albums/" + album.getId() + "/photos/" + photo.getId() + "/download-photo";
                 photos.add(new PhotoDTO(photo.getId(), photo.getName(), photo.getDescription(), 
-                                        photo.getFileName(), link));
+                                        photo.getFileName(), link, album.getId()));
                 
             }
 
@@ -167,7 +167,7 @@ public class AlbumController {
             for (Photo photo : photoService.findByAlbumId(album.getId())){
                 String link = "/albums/" + album.getId() + "/photos/" + photo.getId() + "/download-photo";
                 photos.add(new PhotoDTO(photo.getId(), photo.getName(), photo.getDescription(), 
-                                        photo.getFileName(), link));
+                                        photo.getFileName(), link, album.getId()));
                 
             }
             albums.add(new AlbumViewDTO(album.getId(), album.getName(), album.getDescription(), photos));
@@ -204,7 +204,7 @@ public class AlbumController {
         for (Photo photo : photoService.findByAlbumId(album.getId())){
             String link = "/albums/" + album.getId() + "/photos/" + photo.getId() + "/download-photo";
             photos.add(new PhotoDTO(photo.getId(), photo.getName(), photo.getDescription(), 
-                                    photo.getFileName(), link));
+                                    photo.getFileName(), link, album.getId()));
             
         }
         AlbumViewDTO albumViewDTO = new AlbumViewDTO(album.getId(), album.getName(), album.getDescription(), photos);
@@ -340,7 +340,7 @@ public class AlbumController {
     public ResponseEntity<?> downloadPhoto(@PathVariable("album_id") long album_id, 
                         @PathVariable("photo_id") long photo_id, Authentication authentication){
         
-        return downloadFile(album_id, photo_id, PHOTOS_FOLDER_NAME, authentication);
+        return downloadFile(album_id, photo_id, PHOTOS_FOLDER_NAME, authentication, "attachment");
     }
 
     @GetMapping("albums/{album_id}/photos/{photo_id}/download-thumbnail")
@@ -350,11 +350,20 @@ public class AlbumController {
     public ResponseEntity<?> downloadThumbnail(@PathVariable("album_id") long album_id, 
                         @PathVariable("photo_id") long photo_id, Authentication authentication){
         
-        return downloadFile(album_id, photo_id, THUMBNAIL_FOLDER_NAME, authentication);
+        return downloadFile(album_id, photo_id, THUMBNAIL_FOLDER_NAME, authentication, "attachment");
 
     }
 
-    public ResponseEntity<?> downloadFile(long album_id, long photo_id, String folderName, Authentication authentication){
+    @GetMapping("albums/{album_id}/photos/{photo_id}/view")
+    @SecurityRequirement(name = "psgs-demo-api")
+    @Operation(summary = "View specific photo")
+    @ApiResponse(responseCode = "200", description = "Photo file", content = @Content(mediaType = "image/*"))
+    public ResponseEntity<?> viewPhoto(@PathVariable("album_id") long album_id, 
+                        @PathVariable("photo_id") long photo_id, Authentication authentication){
+        return downloadFile(album_id, photo_id, PHOTOS_FOLDER_NAME, authentication, "inline");
+    }
+
+    public ResponseEntity<?> downloadFile(long album_id, long photo_id, String folderName, Authentication authentication, String disposition){
         String email = authentication.getName();
         Optional<Account> optionalAccount = accountService.findByEmail(email);
         Account account = optionalAccount.get();
@@ -396,7 +405,7 @@ public class AlbumController {
                 // Log the error and fallback to default
                 contentType = "application/octet-stream";
             }
-            String headerValue = "attachment; filename=\"" + photo.getOriginalFileName() + "\"";
+            String headerValue = disposition + "; filename=\"" + photo.getOriginalFileName() + "\"";
 
             return ResponseEntity.ok()
                         .contentType(MediaType.parseMediaType(contentType))

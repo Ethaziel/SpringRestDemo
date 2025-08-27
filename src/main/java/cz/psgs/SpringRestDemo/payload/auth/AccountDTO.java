@@ -20,4 +20,11 @@ public class AccountDTO {
     @Schema(description = "Password", example = "password", 
             requiredMode = RequiredMode.REQUIRED, maxLength = 20, minLength = 6)
     private String password;
+
+    private String name;
+    private String job;
+    private int age;
+    private String personalInfo;
+    private boolean male;
+    private String avatar;
 }

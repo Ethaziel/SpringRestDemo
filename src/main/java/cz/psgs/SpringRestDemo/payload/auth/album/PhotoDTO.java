@@ -17,5 +17,6 @@ public class PhotoDTO {
     private String description;
     private String fileName;
     private String downloadLink;
+    private long albumId;
 
 }

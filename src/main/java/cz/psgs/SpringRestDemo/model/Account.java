@@ -21,8 +21,13 @@ public class Account {
 
     @Column(unique = true)
     private String email;
-
     private String password;
-
     private String authorities;
+
+    private String name;
+    private String job;
+    private int age;
+    private String personalInfo;
+    private boolean male;
+    private String avatar;
 }
