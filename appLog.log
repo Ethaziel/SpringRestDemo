@@ -1,21 +1,21 @@
-2025-08-25 14:32:54,756 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Starting SpringRestDemoApplication using Java 21.0.6 with PID 25212 (C:\Users\petrs\Documents\Programování\SpringRestDemo\target\classes started by petrs in C:\Users\petrs\Documents\Programování\SpringRestDemo)
- 2025-08-25 14:32:54,766 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] The following 1 profile is active: "dev"
- 2025-08-25 14:32:57,603 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
- 2025-08-25 14:32:57,724 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 100 ms. Found 3 JPA repository interfaces.
- 2025-08-25 14:32:58,814 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
- 2025-08-25 14:32:58,845 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
- 2025-08-25 14:32:58,846 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.42]
- 2025-08-25 14:32:58,980 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
- 2025-08-25 14:32:58,981 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 4144 ms
- 2025-08-25 14:32:59,503 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
- 2025-08-25 14:32:59,616 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.18.Final
- 2025-08-25 14:32:59,682 [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
- 2025-08-25 14:33:00,286 [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
- 2025-08-25 14:33:00,338 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
- 2025-08-25 14:33:00,659 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
- 2025-08-25 14:33:00,662 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
- 2025-08-25 14:33:00,713 [WARN] org.hibernate.orm.deprecation [main] HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
- 2025-08-25 14:33:00,762 [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
+2025-08-27 15:03:01,507 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Starting SpringRestDemoApplication using Java 21.0.6 with PID 16856 (C:\Users\petrs\Documents\Programování\SpringRestDemo\target\classes started by petrs in C:\Users\petrs\Documents\Programování\SpringRestDemo)
+ 2025-08-27 15:03:01,511 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] The following 1 profile is active: "dev"
+ 2025-08-27 15:03:03,598 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+ 2025-08-27 15:03:03,697 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 81 ms. Found 3 JPA repository interfaces.
+ 2025-08-27 15:03:04,884 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
+ 2025-08-27 15:03:04,910 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+ 2025-08-27 15:03:04,911 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.42]
+ 2025-08-27 15:03:05,022 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+ 2025-08-27 15:03:05,024 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 3442 ms
+ 2025-08-27 15:03:05,710 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+ 2025-08-27 15:03:05,810 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.18.Final
+ 2025-08-27 15:03:05,872 [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
+ 2025-08-27 15:03:06,455 [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+ 2025-08-27 15:03:06,502 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+ 2025-08-27 15:03:06,867 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
+ 2025-08-27 15:03:06,869 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+ 2025-08-27 15:03:06,904 [WARN] org.hibernate.orm.deprecation [main] HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+ 2025-08-27 15:03:06,930 [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -23,38 +23,35 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
- 2025-08-25 14:33:02,063 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
- 2025-08-25 14:33:02,120 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
- 2025-08-25 14:33:03,369 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
- 2025-08-25 14:33:03,916 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint beneath base path '/actuator'
- 2025-08-25 14:33:03,962 [INFO] org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer [main] Global AuthenticationManager configured with UserDetailsService bean with name accountService
- 2025-08-25 14:33:04,693 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
- 2025-08-25 14:33:04,845 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
- 2025-08-25 14:33:04,876 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Started SpringRestDemoApplication in 10.819 seconds (process running for 11.852)
- 2025-08-25 14:33:06,413 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
- 2025-08-25 14:33:06,414 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
- 2025-08-25 14:33:06,416 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 2 ms
- 2025-08-25 20:41:35,062 [WARN] com.zaxxer.hikari.pool.HikariPool [HikariPool-1:housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4h9m44s912ms822µs600ns).
- 2025-08-25 20:42:09,810 [WARN] javax.management.remote.misc [RMI TCP Connection(4)-127.0.0.1] The server has decided to close this client connection.
- 2025-08-25 20:42:22,797 [WARN] com.zaxxer.hikari.pool.HikariPool [HikariPool-1:housekeeper] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49s75ms109µs900ns).
- 2025-08-25 22:41:47,577 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Starting SpringRestDemoApplication using Java 21.0.6 with PID 19700 (C:\Users\petrs\Documents\Programování\SpringRestDemo\target\classes started by petrs in C:\Users\petrs\Documents\Programování\SpringRestDemo)
- 2025-08-25 22:41:47,580 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] The following 1 profile is active: "dev"
- 2025-08-25 22:41:49,921 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
- 2025-08-25 22:41:50,062 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 113 ms. Found 3 JPA repository interfaces.
- 2025-08-25 22:41:51,104 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
- 2025-08-25 22:41:51,131 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
- 2025-08-25 22:41:51,132 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.42]
- 2025-08-25 22:41:51,242 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
- 2025-08-25 22:41:51,242 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 3574 ms
- 2025-08-25 22:41:51,689 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
- 2025-08-25 22:41:51,852 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.18.Final
- 2025-08-25 22:41:51,923 [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
- 2025-08-25 22:41:52,462 [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
- 2025-08-25 22:41:52,521 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
- 2025-08-25 22:41:52,876 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
- 2025-08-25 22:41:52,878 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
- 2025-08-25 22:41:52,930 [WARN] org.hibernate.orm.deprecation [main] HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
- 2025-08-25 22:41:53,018 [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
+ 2025-08-27 15:03:08,651 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+ 2025-08-27 15:03:08,705 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+ 2025-08-27 15:03:10,282 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+ 2025-08-27 15:03:11,155 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint beneath base path '/actuator'
+ 2025-08-27 15:03:11,237 [INFO] org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer [main] Global AuthenticationManager configured with UserDetailsService bean with name accountService
+ 2025-08-27 15:03:12,183 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
+ 2025-08-27 15:03:12,382 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
+ 2025-08-27 15:03:12,400 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Started SpringRestDemoApplication in 11.681 seconds (process running for 12.464)
+ 2025-08-27 15:03:13,379 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+ 2025-08-27 15:03:13,380 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+ 2025-08-27 15:03:13,382 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 2 ms
+ 2025-08-27 23:35:32,048 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Starting SpringRestDemoApplication using Java 21.0.6 with PID 24512 (C:\Users\petrs\Documents\Programování\SpringRestDemo\target\classes started by petrs in C:\Users\petrs\Documents\Programování\SpringRestDemo)
+ 2025-08-27 23:35:32,052 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] The following 1 profile is active: "dev"
+ 2025-08-27 23:35:33,753 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+ 2025-08-27 23:35:33,846 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 77 ms. Found 3 JPA repository interfaces.
+ 2025-08-27 23:35:34,710 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
+ 2025-08-27 23:35:34,734 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+ 2025-08-27 23:35:34,734 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.42]
+ 2025-08-27 23:35:34,829 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+ 2025-08-27 23:35:34,830 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2714 ms
+ 2025-08-27 23:35:35,211 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+ 2025-08-27 23:35:35,320 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.18.Final
+ 2025-08-27 23:35:35,378 [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
+ 2025-08-27 23:35:35,811 [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+ 2025-08-27 23:35:35,852 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+ 2025-08-27 23:35:36,131 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
+ 2025-08-27 23:35:36,133 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+ 2025-08-27 23:35:36,159 [WARN] org.hibernate.orm.deprecation [main] HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+ 2025-08-27 23:35:36,180 [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -62,16 +59,53 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
- 2025-08-25 22:41:54,292 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
- 2025-08-25 22:41:54,348 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
- 2025-08-25 22:41:56,151 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
- 2025-08-25 22:41:56,693 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint beneath base path '/actuator'
- 2025-08-25 22:41:56,731 [INFO] org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer [main] Global AuthenticationManager configured with UserDetailsService bean with name accountService
- 2025-08-25 22:41:57,504 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
- 2025-08-25 22:41:57,707 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
- 2025-08-25 22:41:57,744 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Started SpringRestDemoApplication in 10.915 seconds (process running for 11.819)
- 2025-08-25 22:41:58,958 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
- 2025-08-25 22:41:58,958 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
- 2025-08-25 22:41:58,960 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 1 ms
- 2025-08-25 22:45:25,156 [INFO] org.springdoc.api.AbstractOpenApiResource [http-nio-8080-exec-9] Init duration for springdoc-openapi is: 501 ms
+ 2025-08-27 23:35:37,183 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+ 2025-08-27 23:35:37,229 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+ 2025-08-27 23:35:38,337 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+ 2025-08-27 23:35:38,773 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint beneath base path '/actuator'
+ 2025-08-27 23:35:38,809 [INFO] org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer [main] Global AuthenticationManager configured with UserDetailsService bean with name accountService
+ 2025-08-27 23:35:39,413 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
+ 2025-08-27 23:35:39,527 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
+ 2025-08-27 23:35:39,542 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Started SpringRestDemoApplication in 8.124 seconds (process running for 8.823)
+ 2025-08-27 23:35:40,614 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+ 2025-08-27 23:35:40,615 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+ 2025-08-27 23:35:40,719 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 1 ms
+ 2025-08-27 23:40:20,410 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Starting SpringRestDemoApplication using Java 21.0.6 with PID 15028 (C:\Users\petrs\Documents\Programování\SpringRestDemo\target\classes started by petrs in C:\Users\petrs\Documents\Programování\SpringRestDemo)
+ 2025-08-27 23:40:20,411 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] The following 1 profile is active: "dev"
+ 2025-08-27 23:40:21,927 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+ 2025-08-27 23:40:22,012 [INFO] org.springframework.data.repository.config.RepositoryConfigurationDelegate [main] Finished Spring Data repository scanning in 69 ms. Found 3 JPA repository interfaces.
+ 2025-08-27 23:40:22,717 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat initialized with port 8080 (http)
+ 2025-08-27 23:40:22,733 [INFO] org.apache.catalina.core.StandardService [main] Starting service [Tomcat]
+ 2025-08-27 23:40:22,734 [INFO] org.apache.catalina.core.StandardEngine [main] Starting Servlet engine: [Apache Tomcat/10.1.42]
+ 2025-08-27 23:40:22,820 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [main] Initializing Spring embedded WebApplicationContext
+ 2025-08-27 23:40:22,821 [INFO] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 2348 ms
+ 2025-08-27 23:40:23,193 [INFO] org.hibernate.jpa.internal.util.LogHelper [main] HHH000204: Processing PersistenceUnitInfo [name: default]
+ 2025-08-27 23:40:23,265 [INFO] org.hibernate.Version [main] HHH000412: Hibernate ORM core version 6.6.18.Final
+ 2025-08-27 23:40:23,320 [INFO] org.hibernate.cache.internal.RegionFactoryInitiator [main] HHH000026: Second-level cache disabled
+ 2025-08-27 23:40:23,692 [INFO] org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo [main] No LoadTimeWeaver setup: ignoring JPA class transformer
+ 2025-08-27 23:40:23,727 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Starting...
+ 2025-08-27 23:40:23,964 [INFO] com.zaxxer.hikari.pool.HikariPool [main] HikariPool-1 - Added connection conn0: url=jdbc:h2:file:./db/db user=ADMIN
+ 2025-08-27 23:40:23,966 [INFO] com.zaxxer.hikari.HikariDataSource [main] HikariPool-1 - Start completed.
+ 2025-08-27 23:40:23,988 [WARN] org.hibernate.orm.deprecation [main] HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+ 2025-08-27 23:40:24,011 [INFO] org.hibernate.orm.connections.pooling [main] HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 2.3.232
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+ 2025-08-27 23:40:24,955 [INFO] org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator [main] HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+ 2025-08-27 23:40:25,001 [INFO] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean [main] Initialized JPA EntityManagerFactory for persistence unit 'default'
+ 2025-08-27 23:40:25,577 [INFO] cz.psgs.SpringRestDemo.config.DBCleaner [main] DBCleaner: Starting cleanup, found 0 photos in DB
+ 2025-08-27 23:40:25,578 [INFO] cz.psgs.SpringRestDemo.config.DBCleaner [main] DBCleaner: Finished cleanup, removed 0 orphaned photo entries
+ 2025-08-27 23:40:26,090 [WARN] org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration [main] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+ 2025-08-27 23:40:26,486 [INFO] org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver [main] Exposing 1 endpoint beneath base path '/actuator'
+ 2025-08-27 23:40:26,520 [INFO] org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer [main] Global AuthenticationManager configured with UserDetailsService bean with name accountService
+ 2025-08-27 23:40:27,103 [INFO] org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration [main] H2 console available at '/db-console'. Database available at 'jdbc:h2:file:./db/db'
+ 2025-08-27 23:40:27,220 [INFO] org.springframework.boot.web.embedded.tomcat.TomcatWebServer [main] Tomcat started on port 8080 (http) with context path '/'
+ 2025-08-27 23:40:27,239 [INFO] cz.psgs.SpringRestDemo.SpringRestDemoApplication [main] Started SpringRestDemoApplication in 7.419 seconds (process running for 8.119)
+ 2025-08-27 23:40:29,075 [INFO] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/] [RMI TCP Connection(2)-127.0.0.1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+ 2025-08-27 23:40:29,076 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Initializing Servlet 'dispatcherServlet'
+ 2025-08-27 23:40:29,077 [INFO] org.springframework.web.servlet.DispatcherServlet [RMI TCP Connection(2)-127.0.0.1] Completed initialization in 1 ms
  

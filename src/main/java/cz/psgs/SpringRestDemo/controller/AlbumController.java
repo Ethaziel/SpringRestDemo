@@ -447,10 +447,7 @@ public class AlbumController {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
                 }
 
-                AppUtil.deletePhotoFromPath(photo.getFileName(), PHOTOS_FOLDER_NAME, album_id);
-                AppUtil.deletePhotoFromPath(photo.getFileName(), THUMBNAIL_FOLDER_NAME, album_id);
-                photoService.delete(photo);
-
+                photoService.deletePhotoAndFiles(photo);
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
