@@ -157,8 +157,8 @@ public class AuthController {
         Optional<Account> optionalAccount = accountService.findById(user_id);
         if (optionalAccount.isPresent()){
             Account account = optionalAccount.get();
-            account.setAuthorities(authoritiesDTO.getAuthorities());
-            accountService.save(account);
+            account = accountService.updateAuthorities(account, authoritiesDTO.getAuthorities());
+            
             return ResponseEntity.ok(new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities()));
         }
         return new ResponseEntity<AccountViewDTO>(new AccountViewDTO(), HttpStatus.BAD_REQUEST);
@@ -179,6 +179,25 @@ public class AuthController {
         account.setPassword(passwordDTO.getPassword());
         accountService.save(account);
         return new AccountViewDTO(account.getId(), account.getEmail(), account.getAuthorities());
+    }
+
+    @PutMapping(value = "/profile/update-profile", produces = "application/json", consumes = "application/json")
+    @ApiResponse(responseCode = "200", description = "Update profile")
+    @ApiResponse(responseCode = "401", description = "Token missing")
+    @ApiResponse(responseCode = "403", description = "Token error")
+    @Operation(summary = "Update profile")
+    @SecurityRequirement(name = "psgs-demo-api")
+    public AccountViewDTO updateProfile(@Valid @RequestBody ProfileDTO profileDTO, Authentication authentication){
+        String email = authentication.getName();
+        Optional<Account> optionalAccount = accountService.findByEmail(email);
+        
+        Account acc = optionalAccount.get();
+
+        acc = accountService.updateProfile(acc, profileDTO);
+
+        return new AccountViewDTO(acc.getId(), acc.getEmail(), acc.getAuthorities(), acc.getName(), 
+                                    acc.getJob(), acc.getAge(), acc.getPersonalInfo(), acc.isMale(), 
+                                    acc.getAvatar());
     }
 
     @GetMapping(value = "/profile/account", produces = "application/json")
