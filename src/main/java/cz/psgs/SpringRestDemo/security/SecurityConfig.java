@@ -130,6 +130,7 @@ public class SecurityConfig {
             .requestMatchers("/auth/profile").authenticated()
             .requestMatchers("/auth/profile/account").authenticated()
             .requestMatchers("/auth/profile/update-password").authenticated()
+            .requestMatchers("/auth/profile/update-profile").authenticated()
             .requestMatchers("/auth/profile/delete").authenticated()
             .requestMatchers("/albums/**").authenticated()
             .requestMatchers("/").permitAll()

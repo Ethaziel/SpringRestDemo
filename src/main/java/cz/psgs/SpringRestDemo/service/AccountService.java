@@ -15,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import cz.psgs.SpringRestDemo.model.Account;
+import cz.psgs.SpringRestDemo.payload.auth.ProfileDTO;
 import cz.psgs.SpringRestDemo.repository.AccountRepository;
 import cz.psgs.SpringRestDemo.util.constants.Authority;
 
@@ -62,4 +63,20 @@ public class AccountService implements UserDetailsService{
         return new User(account.getEmail(), account.getPassword(), grantedAuthorities);
 
     }
+
+    public Account updateProfile(Account account, ProfileDTO dto) {
+        account.setAge(dto.getAge());
+        account.setJob(dto.getJob());
+        account.setMale(dto.isMale());
+        account.setName(dto.getName());
+        account.setPersonalInfo(dto.getPersonalInfo());
+        
+        return accountRepository.save(account);
+    }
+
+    public Account updateAuthorities(Account account, String newAuthorities) {
+        account.setAuthorities(newAuthorities);
+        return accountRepository.save(account); // no password encoding
+    }
+
 }
